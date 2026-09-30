@@ -4,14 +4,37 @@ Force la luminosité de l'écran au maximum le temps d'afficher un contenu à sc
 
 TurboModule (New Architecture uniquement), autolinké sur Android et iOS : rien à déclarer dans `MainApplication` ni dans le projet Xcode.
 
+## Prérequis
+
+- React Native ≥ 0.76, New Architecture activée
+- Android 7.0 (API 24) minimum
+- iOS 15.1 minimum
+
+Le module n'impose pas de version propre : il reprend le `minSdkVersion` de l'app et la version iOS minimale de React Native (`min_ios_version_supported`).
+
 ## Installation
 
 ```bash
 yarn add github:kardham-digital/react-native-screen-brightness#v1.0.0
-cd ios && pod install
 ```
 
-Prérequis : React Native ≥ 0.76 avec `newArchEnabled=true`.
+### Android
+
+1. Vérifier `newArchEnabled=true` dans `android/gradle.properties`.
+2. Vérifier `minSdkVersion` ≥ 24 dans `android/build.gradle`.
+3. Recompiler l'app (`yarn android`). Le module est autolinké : rien à ajouter dans `MainApplication`, aucune permission dans `AndroidManifest.xml`.
+
+### iOS
+
+1. Vérifier la cible de déploiement ≥ 15.1 (`platform :ios` du `Podfile`, défaut React Native).
+2. Installer les pods :
+
+   ```bash
+   cd ios && pod install
+   ```
+
+3. Recompiler l'app (`yarn ios`). Le module est autolinké : rien à ajouter dans le projet Xcode, aucune clé dans `Info.plist`.
+4. Tester sur un vrai iPhone : la luminosité n'a aucun effet sur le simulateur.
 
 ## Utilisation
 
