@@ -1,0 +1,40 @@
+{
+  "name": "@kardham-digital/react-native-screen-brightness",
+  "version": "1.0.0",
+  "description": "Force la luminosité de l'écran au maximum le temps d'afficher un contenu à scanner (QR code, badge)",
+  "license": "MIT",
+  "author": "Kardham Digital SAS",
+  "homepage": "https://github.com/kardham-digital/react-native-screen-brightness#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kardham-digital/react-native-screen-brightness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kardham-digital/react-native-screen-brightness/issues"
+  },
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "KDScreenBrightness.podspec",
+    "!android/build"
+  ],
+  "keywords": [
+    "react-native",
+    "brightness",
+    "turbomodule"
+  ],
+  "codegenConfig": {
+    "name": "KDScreenBrightnessSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.kardhamdigital.screenbrightness"
+    }
+  },
+  "peerDependencies": {
+    "react-native": ">=0.76"
+  }
+}
