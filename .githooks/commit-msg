@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Enforce the commit convention documented in docs/conventions.md:
+#
+#   <type>: <description>            docs: document platform prerequisites
+#   <platform>: <type> <description>  iOS: fix brightness not restored on background
+#
+# Enable once per clone: git config core.hooksPath .githooks
+# Bypass once with `git commit --no-verify`.
+
+msg_file="$1"
+
+# First non-empty, non-comment line. Let git handle an empty message itself.
+subject=$(grep -v '^#' "$msg_file" | sed -n '/./{p;q;}')
+[ -n "$subject" ] || exit 0
+
+# Subjects git generates on its own.
+case "$subject" in
+	"Merge "*|"Revert "*|"Reapply "*|"fixup! "*|"squash! "*) exit 0 ;;
+esac
+
+types='feat|fix|chore|refactor|docs|test'
+
+printf '%s' "$subject" | grep -qE "^(($types): |(Android|iOS): ($types) )[a-z0-9\`].{2,}[^.]$" && exit 0
+
+cat >&2 <<MSG
+
+  Commit rejected:
+
+    $subject
+
+  Expected:
+    <type>: <description>             docs: document platform prerequisites
+    <platform>: <type> <description>  iOS: fix brightness not restored on background
+
+  type: feat fix chore refactor docs test
+  platform (optional): Android iOS
+  description: English, imperative, lowercase, no trailing period
+
+  Full rules: docs/conventions.md
+  Bypass once: git commit --no-verify
+
+MSG
+exit 1
